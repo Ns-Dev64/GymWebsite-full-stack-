@@ -1,0 +1,33 @@
+{%extends 'navbase.html'%}
+{% block content %}
+<style>
+     .centered-div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        body{
+            background: rgb(174,205,212);
+background: linear-gradient(90deg, rgba(174,205,212,1) 0%, rgba(231,217,217,1) 51%, rgba(183,208,213,1) 100%);
+        }
+    </style>
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class=" centered-div">
+  
+        <h4 style="font-family: Arial, Helvetica, sans-serif; font-weight: bolder; font-style: oblique;">Your Account has been created Successfully!!</h4>
+      
+    <br>
+    <br>
+<a href="{% url 'profile' %}" class="btn btn-primary" >Go to Dashboard</a>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{%extends 'navbase.html'%}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+       body{
+        background: linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%);
+    }
+
+        .user-profile {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .user-profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h2 {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="user-profile">
+        <img src="{%url 'qrcode' %}" alt="QR">
+        {%for member in member%}
+        <h2>{{member.full_name}}</h2>
+        <p>Email: {{ member.email }}</p>
+        <p>Phone: {{ member.phone }}</p>
+        <p>Traning program: {{member.classes}}</p>
+        {%endfor%}
+        <a class="btn-primary" href="{% url 'edit' %}">Edit Profile</a>
+    </div>
+
+</body>
+
+</html>
+
+{% endblock %}

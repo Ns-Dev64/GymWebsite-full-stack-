@@ -1,0 +1,280 @@
+{%extends 'navbase.html'%}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<style>
+
+    .delete-profile-container {
+      max-width: 100%;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .delete-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .delete-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: #d9534f;
+    }
+
+    .password-field,
+    .verification-field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .delete-account-button {
+      background-color: #d9534f;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .delete-account-button:hover {
+      background-color: #c9302c;
+    }
+
+    body {
+    margin: 0;
+    padding-top: 40px;
+    color: #2e323c;
+    background: linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%);
+    position: relative;
+    height: 100%;
+}
+.account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+.account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+.account-settings .user-profile .user-avatar img {
+    width: 90px;
+    height: 90px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+.account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+.account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #9fa8b9;
+}
+.account-settings .about {
+    margin: 2rem 0 0 0;
+    text-align: center;
+}
+.account-settings .about h5 {
+    margin: 0 0 15px 0;
+    color: #007ae1;
+}
+.account-settings .about p {
+    font-size: 0.825rem;
+}
+.form-control {
+    border: 1px solid #cfd1d8;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    font-size: .825rem;
+    background: #ffffff;
+    color: #2e323c;
+}
+
+.card {
+    background: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+
+.blur-background {
+  backdrop-filter: blur(10px); 
+  background-color: rgba(255, 255, 255, 0.3); 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+</style>
+<script>
+    function validateform(){
+        var validate=document.getElementById('verification').value;
+    if (validate!=='Delete'){
+        alert("please enter the text correctly");
+        return false;
+    }
+    return true;
+    }
+</script>
+<div class="modal fade" id="deleteprofile-modal" style="width: 400px; margin-left: 500px; margin-top: 112px; "  tabindex="-1" role="dialog" aria-labelledby="deleteprofilelabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div >
+                <div class="delete-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M1.5 3a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 0 1h-1.395l-.553 9.405A1.5 1.5 0 0 1 11.053 14H4.947a1.5 1.5 0 0 1-1.399-1.095L2.895 3H1.5a.5.5 0 0 1-.5-.5zM4.18 2H11.82L11.316.553a1 1 0 0 0-1.908 0L4.18 2zM2 15a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3H2v12z"/>
+                    </svg>
+                </div>
+                <h3 class="font-bold text-2xl text-black mb-2">Delete Account?</h3>
+                <p style="font-weight: bolder;">*Membership will be revoked</p>
+
+                <form  method="post" role="form" onsubmit="return validateform() " action="{% url 'deleteprofile' %}">
+                    {% csrf_token %}
+                <div class="password-field">
+                  <label >Enter your password:</label>
+                  <input type="password" id="password" name="cf-password">
+                </div>
+              
+                <div class="verification-field">
+                  <label for="verification">Type 'Delete' to confirm:</label>
+                  <input type="text" id="verification" >
+                </div>
+              
+                <button class="delete-account-button" type="submit">Delete Account</button>
+            </form>
+              </div>
+        </form>
+        </div>
+    </div>
+    </div>
+<div class="container" id="container">
+    <div class="row gutters">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    <div class="card h-45">
+        <div class="card-body" >
+            <div class="account-settings">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.nkRdhLEaWJ-kWnBx57XRtQHaHl%26pid%3DApi&f=1&ipt=2c408e44d8dda392858f24e1cc4aeab36fdbaec70df79024674a3fb0b96f0554&ipo=images" alt="Maxwell Admin">
+                    </div>
+                    {% for member in member %}
+                    <h5 class="user-name">{{member.username}}</h5>
+                    <h6 class="user-email">{{member.email}}</h6>
+                </div>
+                {% endfor %}
+                <hr>
+                <div>
+                    <a href="#" class="btn btn-danger"  data-toggle="modal" data-target="#deleteprofile-modal">Delete Profile</a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+    <div class="card h-100">
+        <form method="post" role="form">
+            {% csrf_token %}
+        <div class="card-body">
+            <div class="row gutters">
+                
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="fullName">Username</label>
+                        <input type="text" class="form-control" name="cf-name" id="fullName" placeholder="Enter new Username">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" class="form-control" name="cf-full_name" id="fullName" placeholder="Enter new full name">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="eMail">Email</label>
+                        <input type="email" class="form-control" name="cf-email" id="eMail" placeholder="Enter new email ID">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" name="cf-phone" id="phone" placeholder="Enter new phone number">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label for="website">Password</label>
+                        <input type="password" class="form-control" name="cf-password" id="website" placeholder="Enter your password to confirm">
+                        <button type="button" id="submit" name="submit" class="btn btn-success" >Forgot Password?</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+            
+            <div class="row gutters">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="text-right">
+                        <style>
+                            .nig{
+                                margin:1px 1px 1px 1px;
+                            }
+                        </style>
+                        <button type="button" id="submit" name="submit" class="btn btn-secondary button nig"><a href="{% url 'profile' %}">Cancel</a></button>
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary button nig"  >Update</button>
+                        <br>
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}   
+                    </div>
+
+                </div>
+            </form>
+            </div>
+            
+    </div>
+</div>
+    
+{% endblock %}

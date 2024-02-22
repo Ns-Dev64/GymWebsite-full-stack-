@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body{
+        background: linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%);
+    }
+</style>
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="background-color: #f8f9fa;">
+        <div class="modal-header">
+            <h2 class="modal-title" id="membershipFormLabel">Membership Form</h2>
+            
+        </div>
+        <div class="modal-body">
+            <form class="membership-form webform" method="post" role="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control"  name="cf-name" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="cf-full_name" placeholder="FullName" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="cf-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" name="cf-phone" placeholder="Phone number" pattern="[0-9]{10}" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" name="cf-message" placeholder="Additional Message"></textarea>
+                </div>
+               
+                    Traning classes(optional):
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="yogaCheckbox" name="yoga" value="800"><br>
+                    <label class="form-check-label" for="yogaCheckbox">Yoga</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="cardioCheckbox" name="cardio"  value="1200"><br>
+                    <label class="form-check-label" for="cardioCheckbox">Cardio</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="aerobicsCheckbox" name="aerobics"  value="2000"><br>
+                    <label class="form-check-label" for="aerobicsCheckbox">Aerobics</label>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="cf-password" placeholder="Password" required>
+                </div>
+                <br>
+                
+                    <div id="card-element" name="payment"></div>
+                    
+                    <br>
+                    <br>   
+                    <div class="checkout-container">
+                        <br>
+                        <p>Total Amount:</p><p id="totalAmount">₹800
+                         </p>
+                    
+                    </div>
+                    <div id="card-errors" role="alert"></div>
+                    <button type="submit" class="btn btn-primary" id="submit-button" name="submit">Checkout</button>
+                    <br>
+                </form>     
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <br>
+                <div class="form-group custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="signup-agree" required>
+                    <label class="custom-control-label text-small text-muted" for="signup-agree">I agree to the <a href="#">Terms &amp; Conditions</a></label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer"></div>
+    </div>
+</div>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+    var stripe = Stripe('pk_test_51OdrStSGscJjE81TZCEgS1BpY9W15wKE8cTafnQogjLhgnEQE0UFbaCO4U987ELSd2t6ZV4wtAY2tgTBDibqmoQA00J35kFrSi');
+    var elements = stripe.elements();
+
+    var card = elements.create('card', {
+        style: {
+            base: {
+                fontSize: '16px',
+                color: '#32325d',
+            },
+        },
+    });
+
+    card.mount('#card-element');
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var totalAmount = 800;
+
+      function updateTotalAmount() {
+       document.getElementById("totalAmount").innerText="₹"+totalAmount;
+      }
+
+      function handleCheckboxClick(checkboxId, checkboxValue) {
+        var checkbox = document.getElementById(checkboxId);
+
+        if (checkbox.checked) {
+          totalAmount += checkboxValue;
+        } else {
+          totalAmount -= checkboxValue;
+        }
+
+        updateTotalAmount();
+      }
+
+      document.getElementById("yogaCheckbox").addEventListener("click", function() {
+        handleCheckboxClick("yogaCheckbox", 800);
+      });
+
+      document.getElementById("cardioCheckbox").addEventListener("click", function() {
+        handleCheckboxClick("cardioCheckbox", 1200);
+      });
+
+      document.getElementById("aerobicsCheckbox").addEventListener("click", function() {
+        handleCheckboxClick("aerobicsCheckbox", 2000);
+      });
+    });
+</script>
+{% endblock %}
